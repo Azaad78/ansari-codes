@@ -4,12 +4,12 @@ variables:
   # AWS_ECR_REGISTRY: "592568478375.dkr.ecr.ap-southeast-1.amazonaws.com"
   AWS_S3_WEBSITE_BUCKET: "ansari.codes"
 
-# cache: 
-#   key: ${CI_COMMIT_REF_SLUG}
+cache: 
+  key: ${CI_COMMIT_REF_SLUG}
 
 stages: 
   - build frontend
-  # - deploy frontend
+  - deploy frontend
 
 build frontend:
   stage: build frontend
@@ -22,6 +22,8 @@ build frontend:
   script:
     - cd client
     - docker build --target Yarn .
+    - env
+    - aws s3 sync . s3://$AWS_S3_WEBSITE_BUCKET/
     # - docker build -t $CI_REGISTRY_USER/$FRONTEND_IMAGE:$IMAGE_TAG --target Yarn .
     # - docker build -t $ECR_WEB_IMAGE:$IMAGE_TAG --target Yarn .
     # - docker tag $ECR_WEB_IMAGE:$IMAGE_TAG $AWS_ECR_REGISTRY/$ECR_WEB_IMAGE:$IMAGE_TAG
@@ -31,7 +33,7 @@ build frontend:
     # - docker push $AWS_ECR_REGISTRY/$ECR_WEB_IMAGE:$IMAGE_TAG
   artifacts:
     paths:
-      - ./app/bgshop/build
+      - ./client/build
 
 # deploy frontend:
 #   stage: deploy frontend
