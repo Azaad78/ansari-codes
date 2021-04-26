@@ -13,10 +13,12 @@ stages:
 
 build frontend:
   stage: build frontend
-  image: bentolor/docker-dind-awscli
-  services:
-    - name: docker:dind 
-  # before_script:
+  image: node:12-alpine
+  # image: bentolor/docker-dind-awscli
+  # services:
+  #   - name: docker:dind 
+  before_script:
+    - export
     # - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ECR_REGISTRY
     # - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
