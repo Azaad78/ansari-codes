@@ -1,0 +1,41 @@
+variables:
+  PROJECT_NAME: "azreactshop"
+  IMAGE_TAG: $CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA
+  AWS_ECR_REGISTRY: "592568478375.dkr.ecr.ap-southeast-1.amazonaws.com"
+  AWS_S3_WEBSITE_BUCKET: "azreactshop-ap-southeast-1-stage-website-bucket"
+
+cache: 
+  key: ${CI_COMMIT_REF_SLUG}
+
+stages: 
+  - build frontend
+  - deploy frontend
+
+build frontend:
+  stage: build frontend
+  image: bentolor/docker-dind-awscli
+  services:
+    - name: docker:dind 
+  before_script:
+    # - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ECR_REGISTRY
+    # - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - cd client
+    - docker build -t $CI_REGISTRY_USER/$FRONTEND_IMAGE:$IMAGE_TAG --target Yarn .
+    # - docker build -t $ECR_WEB_IMAGE:$IMAGE_TAG --target Yarn .
+    # - docker tag $ECR_WEB_IMAGE:$IMAGE_TAG $AWS_ECR_REGISTRY/$ECR_WEB_IMAGE:$IMAGE_TAG
+    # - docker push $AWS_ECR_REGISTRY/$ECR_WEB_IMAGE:$IMAGE_TAG
+    # - docker create -it --name frontend-container $AWS_ECR_REGISTRY/$ECR_WEB_IMAGE:$IMAGE_TAG bash
+    # - docker cp frontend-container:/app/bgshop/build $PWD
+    # - docker push $AWS_ECR_REGISTRY/$ECR_WEB_IMAGE:$IMAGE_TAG
+  artifacts:
+    paths:
+      - ./client/build
+
+deploy frontend:
+  stage: deploy frontend
+  image: bentolor/docker-dind-awscli
+  script:
+    - cd client/build
+    - env
+    - aws s3 sync . s3://$AWS_S3_WEBSITE_BUCKET/
