@@ -1,8 +1,8 @@
 variables:
-  PROJECT_NAME: "azreactshop"
+  PROJECT_NAME: "ansari-codes-website"
   IMAGE_TAG: $CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA
-  AWS_ECR_REGISTRY: "592568478375.dkr.ecr.ap-southeast-1.amazonaws.com"
-  AWS_S3_WEBSITE_BUCKET: "azreactshop-ap-southeast-1-stage-website-bucket"
+  # AWS_ECR_REGISTRY: "592568478375.dkr.ecr.ap-southeast-1.amazonaws.com"
+  AWS_S3_WEBSITE_BUCKET: "ansari.codes"
 
 cache: 
   key: ${CI_COMMIT_REF_SLUG}
@@ -16,12 +16,13 @@ build frontend:
   image: bentolor/docker-dind-awscli
   services:
     - name: docker:dind 
-  before_script:
+  # before_script:
     # - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ECR_REGISTRY
     # - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - cd client
-    - docker build -t $CI_REGISTRY_USER/$FRONTEND_IMAGE:$IMAGE_TAG --target Yarn .
+    - docker build --target Yarn .
+    # - docker build -t $CI_REGISTRY_USER/$FRONTEND_IMAGE:$IMAGE_TAG --target Yarn .
     # - docker build -t $ECR_WEB_IMAGE:$IMAGE_TAG --target Yarn .
     # - docker tag $ECR_WEB_IMAGE:$IMAGE_TAG $AWS_ECR_REGISTRY/$ECR_WEB_IMAGE:$IMAGE_TAG
     # - docker push $AWS_ECR_REGISTRY/$ECR_WEB_IMAGE:$IMAGE_TAG
