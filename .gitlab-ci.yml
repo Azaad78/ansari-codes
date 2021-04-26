@@ -4,8 +4,8 @@ variables:
   # AWS_ECR_REGISTRY: "592568478375.dkr.ecr.ap-southeast-1.amazonaws.com"
   AWS_S3_WEBSITE_BUCKET: "ansari.codes"
 
-cache: 
-  key: ${CI_COMMIT_REF_SLUG}
+# cache: 
+#   key: ${CI_COMMIT_REF_SLUG}
 
 stages: 
   - build frontend
@@ -33,10 +33,10 @@ build frontend:
     paths:
       - ./app/bgshop/build
 
-deploy frontend:
-  stage: deploy frontend
-  image: bentolor/docker-dind-awscli
-  script:
-    - cd client/build
-    - env
-    - aws s3 sync . s3://$AWS_S3_WEBSITE_BUCKET/
+# deploy frontend:
+#   stage: deploy frontend
+#   image: bentolor/docker-dind-awscli
+#   script:
+#     - cd client/build
+#     - env
+#     - aws s3 sync . s3://$AWS_S3_WEBSITE_BUCKET/
