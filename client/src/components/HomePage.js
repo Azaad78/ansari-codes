@@ -5,7 +5,7 @@ class HomePage extends React.Component {
   render() {
     return (
       <div className="ui stackable">
-        <h1>Please Click "Hire Me" from the Options above!</h1>
+        <h1>Please Click "Hire me" from the Options above!</h1>
 
         <h2>
           You may also take a look at this short video of my review of my motorcycle.
