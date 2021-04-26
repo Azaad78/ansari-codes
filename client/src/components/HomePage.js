@@ -5,10 +5,10 @@ class HomePage extends React.Component {
   render() {
     return (
       <div className="ui stackable">
-        <h1>Before you start.</h1>
+        <h1>Please Click "Hire Me" from the Options above!</h1>
 
         <h2>
-          Please take a look at this short video of my review of my motorcycle.
+          You may also take a look at this short video of my review of my motorcycle.
         </h2>
 
         <YouTube
