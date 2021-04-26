@@ -22,7 +22,7 @@ build frontend:
   script:
     - cd client
     - docker build --target Yarn .
-    - env
+    # - env
     - aws s3 sync . s3://$AWS_S3_WEBSITE_BUCKET/
     # - docker build -t $CI_REGISTRY_USER/$FRONTEND_IMAGE:$IMAGE_TAG --target Yarn .
     # - docker build -t $ECR_WEB_IMAGE:$IMAGE_TAG --target Yarn .

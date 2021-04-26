@@ -16,7 +16,8 @@ COPY . .
 # ARG REACT_APP_BASE_URL="http://localhost:2370"
 # ENV REACT_APP_BASE_URL="${REACT_APP_BASE_URL}"
 
-# RUN yarn build
+RUN yarn build
+WORKDIR /app/bgshop/build
 
 # FROM nginx:stable-alpine as Web
 
