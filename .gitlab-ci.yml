@@ -9,7 +9,7 @@ cache:
 
 stages: 
   - build frontend
-  - deploy frontend
+  # - deploy frontend
 
 build frontend:
   stage: build frontend
@@ -31,7 +31,7 @@ build frontend:
     # - docker push $AWS_ECR_REGISTRY/$ECR_WEB_IMAGE:$IMAGE_TAG
   artifacts:
     paths:
-      - ./client/build
+      - ./app/bgshop/build
 
 deploy frontend:
   stage: deploy frontend
