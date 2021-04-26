@@ -36,10 +36,10 @@ build frontend:
     paths:
       - ./client/build
 
-# deploy frontend:
-#   stage: deploy frontend
-#   image: bentolor/docker-dind-awscli
-#   script:
-#     - cd client/build
-#     - env
-#     - aws s3 sync . s3://$AWS_S3_WEBSITE_BUCKET/
+deploy frontend:
+  stage: deploy frontend
+  image: bentolor/docker-dind-awscli
+  script:
+    - cd client/build
+    # - env
+    - aws s3 sync . s3://$AWS_S3_WEBSITE_BUCKET/
