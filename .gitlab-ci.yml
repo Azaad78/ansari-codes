@@ -9,7 +9,7 @@ cache:
 
 stages: 
   - build frontend
-  - deploy frontend
+  # - deploy frontend
 
 build frontend:
   stage: build frontend
@@ -23,8 +23,13 @@ build frontend:
     # - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - cd client
-    - yarn install
-    - yarn build
+    # - yarn install
+    # - yarn build
+
+    - docker build -t $CI_REGISTRY_USER/$FRONTEND_IMAGE:$IMAGE_TAG --target Yarn .
+    - docker image ls
+    # - docker create -it --name frontend-container $AWS_ECR_REGISTRY/$ECR_WEB_IMAGE:$IMAGE_TAG bash
+
     # - docker build -t $CI_REGISTRY_USER/$FRONTEND_IMAGE:$IMAGE_TAG --target Yarn .
     # - docker build -t $ECR_WEB_IMAGE:$IMAGE_TAG --target Yarn .
     # - docker tag $ECR_WEB_IMAGE:$IMAGE_TAG $AWS_ECR_REGISTRY/$ECR_WEB_IMAGE:$IMAGE_TAG
@@ -36,10 +41,10 @@ build frontend:
     paths:
       - ./client/build
 
-deploy frontend:
-  stage: deploy frontend
-  image: bentolor/docker-dind-awscli
-  script:
-    - cd client/build
-    # - env
-    - aws s3 sync . s3://$AWS_S3_WEBSITE_BUCKET/
+# deploy frontend:
+#   stage: deploy frontend
+#   image: bentolor/docker-dind-awscli
+#   script:
+#     - cd client/build
+#     # - env
+#     - aws s3 sync . s3://$AWS_S3_WEBSITE_BUCKET/
